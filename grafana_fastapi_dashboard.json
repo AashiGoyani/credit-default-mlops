@@ -1,0 +1,51 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "type": "dashboard",
+        "name": "Annotations & Alerts",
+        "enable": true,
+        "hide": true
+      }
+    ]
+  },
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Total Requests",
+      "targets": [
+        { "expr": "sum(request_count_total)", "refId": "A" }
+      ],
+      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 5 }
+    },
+    {
+      "type": "stat",
+      "title": "Requests per Second (RPS)",
+      "targets": [
+        { "expr": "sum(rate(request_count_total[1m]))", "refId": "A" }
+      ],
+      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 5 }
+    },
+    {
+      "type": "gauge",
+      "title": "95th Percentile Latency (seconds)",
+      "targets": [
+        { "expr": "histogram_quantile(0.95, sum(rate(request_latency_seconds_bucket[1m])) by (le))", "refId": "A" }
+      ],
+      "gridPos": { "x": 0, "y": 5, "w": 12, "h": 6 }
+    },
+    {
+      "type": "graph",
+      "title": "Request Rate by Endpoint",
+      "targets": [
+        { "expr": "sum(rate(request_count_total[1m])) by (endpoint)", "refId": "A" }
+      ],
+      "gridPos": { "x": 0, "y": 11, "w": 12, "h": 8 }
+    }
+  ],
+  "schemaVersion": 37,
+  "title": "FastAPI Monitoring Dashboard",
+  "time": { "from": "now-15m", "to": "now" },
+  "refresh": "10s"
+}

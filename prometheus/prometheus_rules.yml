@@ -1,0 +1,46 @@
+groups:
+  - name: fastapi_alerts
+    interval: 15s
+    rules:
+
+      # 1️⃣ FastAPI server down
+      - alert: FastAPIServiceDown
+        expr: up{job="fastapi"} == 0
+        for: 15s
+        labels:
+          severity: critical
+        annotations:
+          summary: "FastAPI service is DOWN 🚨"
+          description: "Prometheus could not reach the FastAPI service at {{ $labels.instance }} for the past 15 seconds."
+
+      # 2️⃣ High request latency
+      - alert: HighRequestLatency
+        expr: histogram_quantile(0.95, sum(rate(request_latency_seconds_bucket[1m])) by (le)) > 2
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High latency detected ⚠️"
+          description: "The 95th percentile latency for FastAPI requests exceeded 2 seconds in the past minute."
+
+      # 3️⃣ High request rate or overload
+      - alert: ExcessiveRequestLoad
+        expr: sum(rate(request_count_total[1m])) by (endpoint) > 10
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "High request load 📈"
+          description: "Endpoint {{ $labels.endpoint }} received more than 10 requests per minute recently. Check traffic or scaling."
+
+  - name: test_email_group
+    interval: 10s
+    rules:
+      - alert: TestEmailAlert
+        expr: vector(1)
+        for: 10s
+        labels:
+          severity: info
+        annotations:
+          summary: "📩 Test Email Alert"
+          description: "This is a test email from Prometheus → Alertmanager → Gmail pipeline."
