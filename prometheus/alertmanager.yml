@@ -1,8 +1,8 @@
 global:
   smtp_smarthost: 'smtp.gmail.com:587'
-  smtp_from: 'aashigoyani18@gmail.com'
-  smtp_auth_username: 'aashigoyani18@gmail.com'
-  smtp_auth_password: 'mbys kpcy yxaf sbkp'   # Gmail App Password
+  smtp_from: '${SMTP_FROM}'
+  smtp_auth_username: '${SMTP_USERNAME}'
+  smtp_auth_password: '${SMTP_PASSWORD}'
   smtp_require_tls: true
 
 route:
@@ -25,7 +25,7 @@ route:
 receivers:
   - name: 'email-alert'
     email_configs:
-      - to: 'aashigoyani18@gmail.com'
+      - to: '${ALERT_EMAIL_TO}'
         send_resolved: true
         headers:
           subject: "[{{ .CommonLabels.severity | toUpper }}] ⚡ {{ .CommonAnnotations.summary }}"

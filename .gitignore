@@ -43,12 +43,18 @@ ipython_config.py
 
 # Environments
 .env
+.env.local
 .venv
 env/
 venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Sensitive Configuration Files
+prometheus/alertmanager.local.yml
+**/secrets.yml
+**/secrets.yaml
 
 # IDEs
 .vscode/
