@@ -292,17 +292,4 @@ docker-compose exec postgres pg_isready -U mlflow
 1. **StandardScaler**: Normalize features
 2. **LogisticRegression**: Binary classification (max_iter=1000, solver=liblinear)
 
-## License
-
-This project is for educational purposes.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## Contact
-
-For questions or issues, please create an issue in the repository.
+#
