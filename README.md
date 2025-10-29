@@ -291,5 +291,3 @@ docker-compose exec postgres pg_isready -U mlflow
 ### Model Pipeline
 1. **StandardScaler**: Normalize features
 2. **LogisticRegression**: Binary classification (max_iter=1000, solver=liblinear)
-
-#
