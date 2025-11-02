@@ -4,7 +4,7 @@ from pathlib import Path
 from sklearn.model_selection import train_test_split
 
 # -------------------------
-# 🔧 Define file paths
+# Define file paths
 # -------------------------
 RAW_PATH = Path("src/data/raw/default of credit card clients.xls")
 PROC_PATH = Path("src/data/processed")
@@ -14,9 +14,9 @@ PROC_PATH.mkdir(parents=True, exist_ok=True)
 REF_PATH.mkdir(parents=True, exist_ok=True)
 
 # -------------------------
-# 🧠 Load dataset
+# Load dataset
 # -------------------------
-print("📂 Loading dataset...")
+print(" Loading dataset...")
 df = pd.read_excel(RAW_PATH, header=1)
 df.columns = [c.strip().lower().replace(" ", "_").replace("-", "_") for c in df.columns]
 df.rename(columns={"default_payment_next_month": "target"}, inplace=True)
@@ -31,7 +31,7 @@ print(f"Columns: {list(df.columns[:10])} ...")
 # -------------------------
 # ⚙️ Feature Engineering
 # -------------------------
-print("🧮 Engineering features...")
+print(" Engineering features...")
 
 # Utilization ratios and payment ratios
 for i in range(1, 7):
@@ -45,9 +45,9 @@ df["avg_util"] = df[[f"util_{i}" for i in range(1, 7)]].mean(axis=1)
 df["misspay_cnt"] = (df[[f"pay_{i}" for i in range(1, 7)]] > 0).sum(axis=1)
 
 # -------------------------
-# 🎯 Split data into train/test
+# Split data into train/test
 # -------------------------
-print("📊 Splitting data into train/test...")
+print(" Splitting data into train/test...")
 
 X = df.drop(columns=["target"])
 y = df["target"]
@@ -63,7 +63,7 @@ test = X_test.copy()
 test["target"] = y_test
 
 # -------------------------
-# 💾 Save processed datasets
+#  Save processed datasets
 # -------------------------
 train.to_csv(PROC_PATH / "train.csv", index=False)
 test.to_csv(PROC_PATH / "test.csv", index=False)
